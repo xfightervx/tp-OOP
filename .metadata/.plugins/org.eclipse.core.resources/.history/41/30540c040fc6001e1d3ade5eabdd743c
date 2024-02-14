@@ -1,0 +1,10 @@
+package ensias.banque;
+
+public class ArrayList {
+	public void add() {
+		
+	}
+	public void remove() {
+		
+	}
+}

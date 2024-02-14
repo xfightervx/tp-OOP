@@ -1,0 +1,17 @@
+package ensias.banque;
+import java.lang.Math;
+import java.time;
+public class Main {
+	public static void main(String[] Args) throws SoldeInsuffisantException {
+		Compte a = new Compte("souhail", 5000.0);
+		for(int i =0;i<5;i++) {
+			double montant = Math.random()*a.getSoldeint();
+			int operation = (int)(Math.random()*100)%2;
+			a.add(operation, null, montant);
+			Thread.sleep(1000);
+		}
+		System.out.println(a.releve());
+		
+	}
+	
+}

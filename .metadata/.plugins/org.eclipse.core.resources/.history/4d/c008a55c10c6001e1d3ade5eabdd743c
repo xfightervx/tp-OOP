@@ -1,0 +1,95 @@
+package ensias.banque;
+import java.util.Scanner;
+public class Compte extends ArrayList{
+	private int numero;
+	private String nom;
+	private double solde;
+	static int nbComptes;
+	operation operations[];
+	
+	public void deposer(double montant) {
+		solde += montant;
+	}
+	public void retirer(double montant)  throws SoldeInsuffisantException{
+		if(solde<montant) {
+			throw new SoldeInsuffisantException(this, montant);
+		}
+		else {
+			solde -= montant;
+		}
+	}
+	public void virer(double montant,Compte compte)  throws SoldeInsuffisantException{
+		if(this.solde>=montant) {
+			compte.deposer(montant);
+			this.retirer(montant);
+		}
+		else {
+			throw new SoldeInsuffisantException(this, montant);
+		}
+	}
+	
+	public Compte(String nom,double solde) {
+		if(nom==null) {
+			Scanner S=new Scanner(System.in);
+			nom = S.next();
+			S.close();
+		}
+		this.nom = nom;
+		this.solde = solde;
+		this.numero = nbComptes;
+		this.operations = new operation[0];
+		nbComptes+=1;
+		
+		
+	}
+	
+	public Compte(){
+		this.nom = null;
+		nbComptes=0;
+	}
+	
+	public Compte(Compte compte) {
+		this.nom = compte.nom;
+		this.solde = compte.solde;
+		this.numero = nbComptes;
+		this.operations = compte.operations;
+		nbComptes++;
+	}
+	
+	public String toString() {
+		String a="le nom du propritaire :  "+ nom +"\nson solde             :  "+ solde+"\nson numero est        :  "+ numero+"\n";
+		return a;
+	}
+	
+	public boolean equals(Compte compte){
+		if(this.nom==compte.nom && this.solde==compte.solde && this.numero==compte.numero && this.operations==compte.operations) {return true;}
+		return false;
+	}
+	public void getters(double solde){
+		if(solde<0) {
+			throw new IllegalArgumentException("le solde doit etre positive");
+		}
+		else {
+			this.solde=solde;
+		}
+	}
+	public String getSolde() {
+		return Double.toString(this.solde);
+	}
+	public void add() {
+		
+	}
+	
+	public void remove() {
+		
+	}
+	public String releve() {
+		String a= this.toString();
+		int b=1;
+		a+="\n\n-----------------------------------------------";
+		for(operation op :operations) {
+			a+="operation "+b+" : "+op+"\n";
+		}
+		return a;
+	}
+}
