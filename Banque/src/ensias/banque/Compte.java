@@ -1,13 +1,14 @@
 package ensias.banque;
 import java.util.Scanner;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Optional;
-public class Compte extends ArrayList{
+public class Compte{
 	private int numero;
 	private String nom;
 	private double solde;
 	static int nbComptes;
-	operation operations[];
+	ArrayList<operation> operations = new ArrayList<>();
 	
 	private void deposer(double montant) {
 		solde += montant;
@@ -39,7 +40,6 @@ public class Compte extends ArrayList{
 		this.nom = nom;
 		this.solde = solde;
 		this.numero = nbComptes;
-		this.operations = new operation[0];
 		nbComptes+=1;
 		
 		
@@ -91,11 +91,25 @@ public class Compte extends ArrayList{
 		if(op==2) {
 			virer(montant, compte.orElse(null));
 		}
-		this.operations= add(this.operations, op, montant);
+		this.operations.add(new operation(op,montant));
 	}
 	
-	public void remove() {
-		remove(this.operations);
+	public void remove(int op,double montant,String time,String date) {
+		int k =0;
+		boolean s = false;
+		for(operation i : this.operations) {
+			if(i==new operation(op, montant,time,date)) {
+				s = true;
+				break;
+			}
+			k+=1;
+		}
+		if(s) {
+			operations.remove(k);
+		}
+		else {
+			System.out.println("l element n existe pas");
+		}
 		
 	}
 	public String releve() {

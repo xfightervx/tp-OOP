@@ -10,8 +10,8 @@ public class Main {
 			a.add(operation, null, montant);
 		}
 		}
-		catch{
-			System.out.println("solde insuffisant");
+		catch(SoldeInsuffisantException e){
+			System.out.println(e);
 		}
 		System.out.println(a.releve());
 		
